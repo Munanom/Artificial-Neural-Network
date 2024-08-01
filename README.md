@@ -22,9 +22,18 @@ Train multiple neural network models with different architectures using the neur
 Evaluate model performance by predicting species on the test set and calculating accuracy.
 Configurations Tested:
 
-Model 1: Neural network with hidden layers [30, 18, 14, 12, 12, 6]
-Model 2: Neural network with hidden layers [30, 24, 20, 18, 16, 14, 12, 8, 6, 3]
-Model 3: Neural network with hidden layers [3, 12]
+- Model 1: Neural network with hidden layers [30, 18, 14, 12, 12, 6]
+- Model 2: Neural network with hidden layers [30, 24, 20, 18, 16, 14, 12, 8, 6, 3]
+- Model 3: Neural network with hidden layers [3, 12]
+
+## Tabular Report
+
+| Number of Hidden Layers | Accuracy (%)  |
+|-------------------------|---------------|
+| 6                       | 100           |
+| 10                      | 100           |
+| 2                       | 96.67   |
+
 Results:
 
 Each model's accuracy is evaluated and compared.
