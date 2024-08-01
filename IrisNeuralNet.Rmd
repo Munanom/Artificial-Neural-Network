@@ -1,0 +1,139 @@
+---
+title: "Artificial Neural Network Assigment"
+author: "Muna Said 664331"
+date: "2024-08-01"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r }
+install.packages(c('neuralnet','keras','tensorflow'), dependencies = T)
+install.packages(c("neuralnet", "keras", "tensorflow"), dependencies = T)
+library(neuralnet)
+install.packages("tidyverse")
+library(tidyverse)
+iris<-iris %>%mutate_if(is.character, as.factor)
+iris<-iris %>%mutate_if(is.character, as.factor)
+sample_iris<-sample_n(iris,5)
+sample_iris
+
+
+summary(iris)
+# Train and test split
+set.seed(254)
+data_rows<-floor(0.80 * nrow(iris))
+data_rows
+
+train_indices<-sample(c(1:nrow(iris)), data_rows)
+train_indices
+train_data<-iris[train_indices, ]
+sample_train_data<-sample_n(train_data,5)
+sample_train_data
+test_data<-iris[-train_indices,]
+sample_test_data<-sample_n(test_data,5)
+sample_test_data
+
+#The plot of 30,18,14,12,12,6 
+model<-neuralnet( Species ~ Sepal.Length +Sepal.Width+Petal.Length +Petal.Width, data = train_data, hidden = c(30,18,14,12,12,6), linear.output = FALSE)
+plot(model, rep = 'best')
+
+
+# Model evaluation
+#predict categories - test dataset
+#list of category names
+#dataframe
+# table - actual and predicated
+pred<-predict(model, test_data)
+
+labels<-c("setosa", "versicolor","virginca")
+labels
+
+prediction_label <- data.frame(max.col(pred)) %>%
+mutate(pred=labels[max.col.pred.]) %>%
+select(2) %>%
+unlist()
+table(test_data$Species, prediction_label)
+
+summary(test_data)
+check= as.numeric(test_data$Species) == max.col(pred)
+
+accuracy<-(sum(check)/nrow(test_data))*100
+print(accuracy)
+
+
+#The plot of 30,24,20,18,16,14,12,8,6,3 
+model<-neuralnet( Species ~ Sepal.Length +Sepal.Width+Petal.Length +Petal.Width, data = train_data, hidden = c(30,24,20,18,16,14,12,8,6,3), linear.output = FALSE)
+
+plot(model, rep = 'best')
+
+#second test
+# Model evaluation
+#predict categories - test dataset
+#list of category names
+#dataframe
+# table - actual and predicated
+
+pred<-predict(model, test_data)
+
+labels<-c("setosa", "versicolor","virginca")
+labels
+prediction_label <- data.frame(max.col(pred)) %>%
+mutate(pred=labels[max.col.pred.]) %>%
+select(2) %>%
+unlist()
+table(test_data$Species, prediction_label)
+summary(test_data)
+check= as.numeric(test_data$Species) == max.col(pred)
+
+accuracy<-(sum(check)/nrow(test_data))*100
+print(accuracy)
+
+
+#third test
+#The plot of 3,12
+model<-neuralnet( Species ~ Sepal.Length +Sepal.Width+Petal.Length +Petal.Width, data = train_data, hidden = c(3,12), linear.output = FALSE)
+
+plot(model, rep = 'best')
+
+
+# Model evaluation
+#predict categories - test dataset
+#list of category names
+#dataframe
+# table - actual and predicated
+
+pred<-predict(model, test_data)
+
+labels<-c("setosa", "versicolor","virginca")
+labels
+prediction_label <- data.frame(max.col(pred)) %>%
+mutate(pred=labels[max.col.pred.]) %>%
+select(2) %>%
+unlist()
+table(test_data$Species, prediction_label)
+summary(test_data)
+check= as.numeric(test_data$Species) == max.col(pred)
+
+accuracy<-(sum(check)/nrow(test_data))*100
+print(accuracy)
+```
+
+## Including Plots
++-------------------------------+----------+--+--+--+
+| Configuration                 | Accurcay |  |  |  |
++-------------------------------+----------+--+--+--+
+| c(30,18,14,12,12,6)           | 100      |  |  |  |
++-------------------------------+----------+--+--+--+
+| c(30,24,20,18,16,14,12,8,6,3) | 100      |  |  |  |
++-------------------------------+----------+--+--+--+
+| c(3,12)                       | 96       |  |  |  |
++-------------------------------+----------+--+--+--+
